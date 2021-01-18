@@ -66,9 +66,9 @@
 
 :root {
     --darkgrey: #e5eff5;
-    --midgrey: #738a94;
-    --lightgrey: #333F44;
-    --dark-main-bg-color: #263238;
+    --midgrey: #738296;
+    --lightgrey: #292f38;
+    --dark-main-bg-color: #1f2328;
     --blue: color-mod(#3eb0ef l(+5%) s(+5%));
 }
 
@@ -127,12 +127,12 @@ input:focus,
 
 .settings-menu-container,
 .gh-main-white {
-    background: #212A2E;
+    background: var(--white);
 }
 
 @media (max-width: 800px) {
     .gh-mobile-nav-bar {
-        background: #212A2E;
+        background: #191b1f;
     }
 }
 
@@ -200,6 +200,7 @@ input:focus,
 
 .gh-btn:not(.gh-btn-green):not(.gh-btn-blue):not(.gh-btn-red) {
     border: color-mod(var(--darkgrey) l(-27%) blackness(+15%)) 1px solid;
+    background: var(--transparent);
 }
 
 .view-actions .gh-btn:not(.gh-btn-green):not(.gh-btn-blue):not(.gh-btn-red) {
@@ -222,10 +223,13 @@ input:focus,
     color: white;
 }
 
+.gh-btn-white {
+    background: var(--transparent);
+}
+
 .gh-btn-link {
     border: none !important;
 }
-
 
 .settings-menu-delete-button {
     color: var(--red);
@@ -286,7 +290,7 @@ input:focus,
 }
 
 .gh-publishmenu-dropdown {
-    background: #212A2E;
+    background: #191b1f;
 }
 
 .gh-image-uploader {
@@ -298,7 +302,7 @@ input:focus,
 }
 
 .gh-main > section.gh-editor-fullscreen {
-    background: color-mod(#212A2E l(+2%));
+    background: color-mod(#191b1f l(+2%));
 }
 
 .dropdown-menu {
@@ -327,7 +331,7 @@ input:focus,
 }
 
 .modal-content {
-    background: #212A2E;
+    background: #191b1f;
 }
 
 .seo-preview-title {
@@ -369,7 +373,7 @@ input:focus,
 }
 
 .gh-canvas-background {
-    background: #212a2e;
+    background: #191b1f;
 }
 
 .gh-canvas-title span path {
@@ -409,6 +413,10 @@ input:focus,
     background: var(--lightgrey);
 }
 
+.settings-menu-content .CodeMirror {
+    background: var(--extra-darkgrey);
+}
+
 .settings-menu-expanded .content-cover,
 .mobile-menu-expanded .content-cover {
     background: transparent;
@@ -421,20 +429,26 @@ input:focus,
 
 .apps-grid,
 .apps-grid-cell {
-    background: #212A2E;
+    background: #191b1f;
 }
 
 .td-cta-box {
-    background: #212A2E;
+    background: #191b1f;
 }
 
 .settings-code-editor .CodeMirror-gutters,
-.settings-code code {
-    background-color: var(--white);
+.settings-code code,
+.form-group code {
+    background-color: var(--extra-darkgrey);
+    border-right: 1px solid var(--lightgrey);
 }
 
 .settings-code-editor .CodeMirror {
-    background: var(--white);
+    color: var(--darkgrey);
+}
+
+.settings-code-editor .CodeMirror-cursor {
+    border-color: var(--midgrey);
 }
 
 .blog-logo,
@@ -443,7 +457,7 @@ input:focus,
 }
 
 .id-item {
-    background: #212A2E;
+    background: #191b1f;
 }
 
 .CodeMirror .cm-spell-error:not(.cm-url):not(.cm-comment):not(.cm-tag):not(.cm-word) {
@@ -479,7 +493,7 @@ input:focus,
 .gh-nav-bottom .ember-basic-dropdown-trigger:hover,
 .gh-nav-list .active,
 .gh-nav-btn-search:hover {
-    background: color-mod(var(--dark-main-bg-color) l(+5%) s(-5%))
+    background: var(--lightgrey);
 }
 
 .gh-nav-list .gh-nav-nightshift span svg path {
@@ -496,7 +510,7 @@ input:focus,
 .gh-contentfilter-menu-trigger:focus,
 .tags-container,
 .content-list ol {
-    background: #212A2E;
+    background: #191b1f;
 }
 
 .gh-posts-list-item:hover,
@@ -512,6 +526,10 @@ input:focus,
     background-color: transparent;
 }
 
+.gh-tag-setting-codeinjection .CodeMirror-gutters {
+    background-color: var(--extra-darkgrey);
+    border-right: 1px solid var(--lightgrey);
+}
 
 /* Koenig styles */
 .kg-link-input {
@@ -521,31 +539,31 @@ input:focus,
 
 /* Dark style Lists */
 .gh-list {
-    background: #212A2E;
+    background: #191b1f;
 }
 
 .gh-list-header,
 .gh-list-row:not(.header):hover .gh-list-cell,
 .gh-list-row:not(.header):hover .gh-list-data,
 .apps-grid-cell:hover {
-    background: color-mod(var(--lightgrey) l(-9%));
+    background: var(--white);
 }
 
 
 /* Members */
 .gh-members-chart-header {
-    background: color-mod(var(--lightgrey) l(-9%));
+    background: var(--white);
 }
 .gh-members-chart-header .gh-contentfilter-type .gh-contentfilter-menu-trigger {
     box-shadow: 0 0 0 1px color-mod(var(--darkgrey) l(-27%) blackness(+15%) alpha(50%));
 }
 
 .gh-members-import-table::before {
-    background: #212A2E;
+    background: #191b1f;
 }
 
 .gh-members-import-table::after {
-    background: #212A2E;
+    background: #191b1f;
 }
 .gh-import-member-select,
 .gh-import-member-select select {
@@ -555,9 +573,28 @@ input:focus,
 .modal-fullsettings-preview-container,
 .fullscreen-modal-email-preview .gh-pe-mobile-container,
 .fullscreen-modal-email-preview .gh-pe-desktop-container {
-    background: #1D252B;
+    background: var(--dark-main-bg-color);
 }
 
 .gh-pe-mobile-bezel {
     background: #2b373e;
+}
+
+.gh-members-emailsettings-footer-input {
+    background: color-mod(var(--lightgrey));
+}
+
+/* Portal */
+.gh-portal-settings-maintabs {
+    border: 1px solid color-mod(var(--darkgrey) l(-27%) blackness(+15%));
+}
+
+.gh-portal-page-url-container {
+    color: var(--darkgrey);
+    border-color: color-mod(var(--lightgrey));
+    background: color-mod(var(--lightgrey));
+}
+
+.gh-portal-settings-maintabs li:not(:last-of-type) {
+    border-right: 1px solid color-mod(var(--darkgrey) l(-27%) blackness(+15%));
 }
