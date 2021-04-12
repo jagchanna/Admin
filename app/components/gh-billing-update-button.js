@@ -11,11 +11,11 @@ export default Component.extend({
 
     subscription: null,
 
-    showUpgradeButton: computed.equal('billing.subscription.status', 'trialing'),
+    showUpgradeButton: computed.reads('billing.subscription.isActiveTrial'),
 
     actions: {
         openBilling() {
-            this.billing.openBillingWindow(this.router.currentURL, '/billing/plans');
+            this.billing.openBillingWindow(this.router.currentURL, '/pro/billing/plans');
         }
     }
 });

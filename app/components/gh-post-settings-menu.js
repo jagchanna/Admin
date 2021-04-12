@@ -1,15 +1,10 @@
 import Component from '@ember/component';
 import SettingsMenuMixin from 'ghost-admin/mixins/settings-menu-component';
 import boundOneWay from 'ghost-admin/utils/bound-one-way';
-import formatMarkdown from 'ghost-admin/utils/format-markdown';
 import moment from 'moment';
 import {alias, or} from '@ember/object/computed';
 import {computed} from '@ember/object';
-import {run} from '@ember/runloop';
 import {inject as service} from '@ember/service';
-import {task, timeout} from 'ember-concurrency';
-
-const PSM_ANIMATION_LENGTH = 400;
 
 export default Component.extend(SettingsMenuMixin, {
     feature: service(),
@@ -26,7 +21,6 @@ export default Component.extend(SettingsMenuMixin, {
     post: null,
 
     _showSettingsMenu: false,
-    _showThrobbers: false,
 
     canonicalUrlScratch: alias('post.canonicalUrlScratch'),
     customExcerptScratch: alias('post.customExcerptScratch'),
@@ -40,6 +34,7 @@ export default Component.extend(SettingsMenuMixin, {
     twitterTitleScratch: alias('post.twitterTitleScratch'),
     slugValue: boundOneWay('post.slug'),
 
+    seoDescription: or('metaDescriptionScratch', 'customExcerptScratch', 'post.excerpt'),
     facebookDescription: or('ogDescriptionScratch', 'customExcerptScratch', 'seoDescription', 'post.excerpt', 'settings.description', ''),
     facebookImage: or('post.ogImage', 'post.featureImage', 'settings.ogImage', 'settings.coverImage'),
     facebookTitle: or('ogTitleScratch', 'seoTitle'),
@@ -54,61 +49,25 @@ export default Component.extend(SettingsMenuMixin, {
         return this.metaTitleScratch || this.post.titleScratch || '(Untitled)';
     }),
 
-    seoDescription: computed('post.scratch', 'metaDescriptionScratch', function () {
-        let metaDescription = this.metaDescriptionScratch || '';
-        let mobiledoc = this.get('post.scratch');
-        let [markdownCard] = (mobiledoc && mobiledoc.cards) || [];
-        let markdown = markdownCard && markdownCard[1] && markdownCard[1].markdown;
-        let placeholder;
-
-        if (metaDescription) {
-            placeholder = metaDescription;
-        } else {
-            let div = document.createElement('div');
-            div.innerHTML = formatMarkdown(markdown, false);
-
-            // Strip HTML
-            placeholder = div.textContent;
-            // Replace new lines and trim
-            placeholder = placeholder.replace(/\n+/g, ' ').trim();
-        }
-
-        return placeholder;
-    }),
-
     seoURL: computed('post.{slug,canonicalUrl}', 'config.blogUrl', function () {
-        let blogUrl = this.get('config.blogUrl');
-        let seoSlug = this.post.slug || '';
-        let canonicalUrl = this.post.canonicalUrl || '';
+        const urlParts = [];
 
-        if (canonicalUrl) {
-            if (canonicalUrl.match(/^\//)) {
-                return `${blogUrl}${canonicalUrl}`;
-            } else {
-                return canonicalUrl;
-            }
+        if (this.post.canonicalUrl) {
+            const canonicalUrl = new URL(this.post.canonicalUrl);
+            urlParts.push(canonicalUrl.host);
+            urlParts.push(...canonicalUrl.pathname.split('/').reject(p => !p));
         } else {
-            let seoURL = `${blogUrl}/${seoSlug}`;
-
-            // only append a slash to the URL if the slug exists
-            if (seoSlug) {
-                seoURL += '/';
-            }
-
-            return seoURL;
+            const blogUrl = new URL(this.config.get('blogUrl'));
+            urlParts.push(blogUrl.host);
+            urlParts.push(...blogUrl.pathname.split('/').reject(p => !p));
+            urlParts.push(this.post.slug);
         }
+
+        return urlParts.join(' > ');
     }),
 
     didReceiveAttrs() {
         this._super(...arguments);
-
-        // HACK: ugly method of working around the CSS animations so that we
-        // can add throbbers only when the animation has finished
-        // TODO: use liquid-fire to handle PSM slide-in and replace tabs manager
-        // with something more ember-like
-        if (this.showSettingsMenu && !this._showSettingsMenu) {
-            this.showThrobbers.perform();
-        }
 
         // fired when menu is closed
         if (!this.showSettingsMenu && this._showSettingsMenu) {
@@ -120,9 +79,6 @@ export default Component.extend(SettingsMenuMixin, {
                 post.set('publishedAtBlogTZ', post.get('publishedAtUTC'));
                 post.validate({attribute: 'publishedAtBlog'});
             }
-
-            // remove throbbers
-            this.set('_showThrobbers', false);
         }
 
         this._showSettingsMenu = this.showSettingsMenu;
@@ -131,22 +87,12 @@ export default Component.extend(SettingsMenuMixin, {
     actions: {
         showSubview(subview) {
             this._super(...arguments);
-
             this.set('subview', subview);
-
-            // Chrome appears to have an animation bug that cancels the slide
-            // transition unless there's a delay between the animation starting
-            // and the throbbers being removed
-            run.later(this, function () {
-                this.set('_showThrobbers', false);
-            }, 50);
         },
 
         closeSubview() {
             this._super(...arguments);
-
             this.set('subview', null);
-            this.showThrobbers.perform();
         },
 
         discardEnter() {
@@ -513,11 +459,6 @@ export default Component.extend(SettingsMenuMixin, {
             }
         }
     },
-
-    showThrobbers: task(function* () {
-        yield timeout(PSM_ANIMATION_LENGTH);
-        this.set('_showThrobbers', true);
-    }).restartable(),
 
     showError(error) {
         // TODO: remove null check once ValidationEngine has been removed

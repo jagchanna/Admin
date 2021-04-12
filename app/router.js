@@ -26,8 +26,8 @@ Router.map(function () {
     this.route('dashboard');
     this.route('launch');
 
-    this.route('billing', function () {
-        this.route('billing-sub', {path: '/*sub'});
+    this.route('pro', function () {
+        this.route('pro-sub', {path: '/*sub'});
     });
 
     this.route('posts');
@@ -48,11 +48,17 @@ Router.map(function () {
 
     this.route('settings');
     this.route('settings.general', {path: '/settings/general'});
+    this.route('settings.members-access', {path: '/settings/members-access'});
     this.route('settings.members-email', {path: '/settings/members-email'});
     this.route('settings.members-payments', {path: '/settings/members-payments'});
     this.route('settings.code-injection', {path: '/settings/code-injection'});
+
+    this.route('settings.products', {path: '/settings/products'});
+    this.route('settings.product', {path: '/settings/product'});
+
     this.route('settings.theme', {path: '/settings/theme'}, function () {
         this.route('uploadtheme');
+        this.route('install');
     });
     this.route('settings.navigation', {path: '/settings/navigation'});
     this.route('settings.labs', {path: '/settings/labs'});

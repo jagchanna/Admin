@@ -26,9 +26,9 @@
     display: block;
     overflow: hidden;
     padding: 0 14px;
-    height: 33px;
+    height: 34px;
     font-size: 1.35rem;
-    line-height: 33px;
+    line-height: 34px;
     text-align: center;
     letter-spacing: 0.2px;
     border-radius: 3px;
@@ -51,18 +51,23 @@
     background: var(--whitegrey-d1);
 }
 
+.gh-btn svg {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.gh-btn-large svg {
+    width: 16px;
+    height: 16px;
+}
+
 /* When disabled */
 .gh-btn.disabled,
 .gh-btn[disabled],
 fieldset[disabled] .gh-btn {
-    opacity: 0.8;
+    opacity: 0.5;
     cursor: not-allowed;
     pointer-events: none;
-}
-
-.gh-btn svg {
-    display: inline-block;
-    vertical-align: middle;
 }
 
 /* Primary button
@@ -80,6 +85,10 @@ fieldset[disabled] .gh-btn {
     background: color-mod(var(--black) l(-20%)) !important;
 }
 
+.gh-btn-primary,
+.gh-btn-black svg {
+    fill: var(--white);
+}
 
 /* Blue button
 /* ---------------------------------------------------------- */
@@ -140,13 +149,13 @@ fieldset[disabled] .gh-btn {
 
 .gh-btn-red:hover {
     color: #fff;
-    background: color-mod(var(--red) l(-4%));
+    background: color-mod(var(--red) l(-4%)) !important;
 }
 
 /* When clicked or focused with keyboard */
 .gh-btn-red:active,
 .gh-btn-red:focus {
-    background: color-mod(var(--red) l(-7%));
+    background: color-mod(var(--red) l(-7%)) !important;
 }
 
 /* Outline button
@@ -164,7 +173,11 @@ fieldset[disabled] .gh-btn {
 .gh-btn-outline:hover {
     color: var(--black);
     background: none;
-    border-color: color-mod(var(--lightgrey-l1) l(-8%));
+    border-color: var(--lightgrey);
+}
+
+.gh-btn-outline svg {
+    fill: var(--black);
 }
 
 /* When clicked or focused with keyboard */
@@ -204,6 +217,10 @@ fieldset[disabled] .gh-btn {
     border-color: var(--red);
 }
 
+.gh-btn-hover-background:hover {
+    background: var(--lightgrey);
+}
+
 
 /* Special Buttons
 /* ---------------------------------------------------------- */
@@ -222,11 +239,6 @@ fieldset[disabled] .gh-btn {
 .gh-btn-white.gh-btn-green:hover,
 .gh-btn-white.gh-btn-blue:hover {
     border: none;
-}
-
-.gh-btn-white span {
-    height: 35px;
-    line-height: 35px;
 }
 
 .gh-btn-strong {
@@ -268,8 +280,8 @@ fieldset[disabled] .gh-btn {
 svg.gh-btn-icon-right {
     margin-left: 0.5em;
     margin-right: 0;
-    width: 16px;
-    height: auto;
+    width: auto;
+    height: 16px;
 }
 
 .gh-btn-icon svg path {
@@ -278,16 +290,6 @@ svg.gh-btn-icon-right {
 
 .gh-btn-icon-no-margin {
     margin: 0;
-}
-
-.gh-btn-icon-grey svg {
-    width: 16px;
-    height: auto;
-    fill: var(--midgrey);
-}
-
-.gh-btn-icon-grey svg path {
-    stroke: var(--midgrey);
 }
 
 .gh-btn-text,
@@ -385,10 +387,11 @@ Usage: CTA buttons grouped together horizontally.
 */
 
 .gh-btn-group {
-    border-radius: 0;
+    display: flex;
+    align-items: center;
     background: var(--whitegrey-l1);
-    border-radius: 2px;
-    padding: 1px;
+    border-radius: 3px;
+    line-height: 0;
 }
 
 .gh-btn-group .gh-btn {
@@ -399,19 +402,20 @@ Usage: CTA buttons grouped together horizontally.
     box-shadow: none;
     margin: 2px;
     border-radius: 2px;
+    color: var(--midgrey);
 }
 
 .gh-btn-group .gh-btn span {
     border-radius: 0;
-    height: 31px;
-    line-height: 31px;
+    height: 30px;
+    line-height: 30px;
     border-radius: 2px;
     background: transparent !important;
+    font-weight: 500 !important;
 }
 
 .gh-btn-group .gh-btn-group-selected span {
     color: var(--black);
-    font-weight: 600;
     padding-left: 12px;
     padding-right: 12px;
     background: var(--white) !important;
@@ -419,7 +423,7 @@ Usage: CTA buttons grouped together horizontally.
 }
 
 .gh-btn-group .gh-btn-group-selected svg {
-    fill: var(--blue);
+    fill: var(--black);
 }
 
 .gh-btn-block + .gh-btn-block {
@@ -439,6 +443,43 @@ Usage: CTA buttons grouped together horizontally.
 
 .gh-btn-link.blue {
     color: var(--blue);
+}
+
+/* Tab buttons */
+/* ---------------------------------------------------------- */
+.gh-btn-tabs {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    border-bottom: 1px solid var(--whitegrey);
+}
+
+.gh-btn-tabs .gh-btn {
+    background: none !important;
+    border-radius: 0;
+    margin-right: 20px;
+    border-bottom: 1px solid transparent;
+}
+
+.gh-btn-tabs .gh-btn span {
+    background: none !important;
+    border-radius: 0;
+    padding: 0;
+    color: var(--midgrey);
+    font-weight: 500 !important;
+}
+
+.gh-btn-tabs .gh-btn span:hover {
+    color: var(--darkgrey);
+}
+
+.gh-btn-tabs .gh-btn-tab-selected {
+    border-bottom-color: var(--black);
+}
+
+.gh-btn-tabs .gh-btn-tab-selected span {
+    color: var(--black);
 }
 
 

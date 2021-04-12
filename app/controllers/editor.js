@@ -95,7 +95,6 @@ export default Controller.extend({
 
     /* public properties -----------------------------------------------------*/
 
-    infoMessage: null,
     leaveEditorTransition: null,
     shouldFocusEditor: false,
     showDeletePostModal: false,
@@ -751,7 +750,6 @@ export default Controller.extend({
         this.set('leaveEditorTransition', null);
         this.set('showLeaveEditorModal', false);
         this.set('showPostPreviewModal', false);
-        this.set('infoMessage', null);
         this.set('wordCount', null);
 
         // remove the onbeforeunload handler as it's only relevant whilst on
@@ -869,13 +867,9 @@ export default Controller.extend({
             type = capitalize(this.get('post.displayName'));
             path = this.get('post.url');
             actions = `<a href="${path}" target="_blank">View ${type}</a>`;
-        } else {
-            type = 'Preview';
-            path = this.get('post.previewUrl');
-            actions = `<a href="${path}" target="_blank">View ${type}</a>`;
         }
 
-        notifications.showNotification(message, {type: 'success', actions: actions.htmlSafe(), delayed});
+        notifications.showNotification(message, {type: 'success', actions: (actions && actions.htmlSafe()), delayed});
     },
 
     _showScheduledNotification(delayed) {

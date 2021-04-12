@@ -12,12 +12,19 @@
     --lime: #B5FF18;
 
     /* Secondary colours */
-    --blue: #23AAF4;
-    --green: #45C32E;
-    --purple: #F71D81;
-    --yellow: #FFC701;
-    --red: #f05230;
-    --pink: #fa3a57;
+    --blue: #14b8ff;
+    --green: #30cf43;
+    --purple: #8e42ff;
+    --yellow: #ffb41f;
+    --red: #f50b23;
+    --pink: #fb2d8d;
+
+    /* Gradients */
+    --lgr-blue: linear-gradient(135deg,#14b8ff 40%,#0083f5);
+    --lgr-pink: linear-gradient(135deg,#fb2d8d 40%,#ff1453);
+    --lgr-green: linear-gradient(135deg,#30cf43 40%,#00c687);
+    --lgr-yellow: linear-gradient(135deg,#ffb41f 40%,#ff8c00);
+    --lrg-black: linear-gradient(135deg,#4e6b77 40%,#0f2230);
 
     /* Greys */
     --blackgrey: #15171A;
@@ -27,7 +34,6 @@
     --midlightgrey: #ABB4BE;
     --lightgrey: #CED4D9;
     --whitegrey: #EBEEF0;
-    --white: #ffffff;
 
     /* Tones */
     --white-10: rgba(255, 255, 255, 0.1);
@@ -117,36 +123,36 @@
     --midlightgrey-d1: color-mod(var(--midlightgrey) h(+1) s(-1%) l(-3%));
     --midlightgrey-d2: color-mod(var(--midlightgrey) h(-3) s(-2%) l(-7%));
 
-    --lightgrey-l2: color-mod(var(--lightgrey) h(+1) s(+14%) l(+8%));
-    --lightgrey-l1: color-mod(var(--lightgrey) h(+1) s(+12%) l(+6%));
+    --lightgrey-l2: color-mod(var(--lightgrey) h(+1) s(+4%) l(+8%));
+    --lightgrey-l1: color-mod(var(--lightgrey) h(+1) s(+3%) l(+6%));
     --lightgrey-d1: color-mod(var(--lightgrey) s(-1%) l(-4%));
     --lightgrey-d2: color-mod(var(--lightgrey) h(-2) s(-2%) l(-7%));
 
     --whitegrey-l2: color-mod(var(--whitegrey) h(+7) s(-4%) l(+5%));
-    --whitegrey-l1: color-mod(var(--whitegrey) h(+1) s(-2%) l(+3%));
-    --whitegrey-d1: color-mod(var(--whitegrey) h(-1) s(-7%) l(-3%));
+    --whitegrey-l1: color-mod(var(--whitegrey) h(+1) s(-2%) l(+2%));
+    --whitegrey-d1: color-mod(var(--whitegrey) h(-1) s(-2%) l(-2%));
     --whitegrey-d2: color-mod(var(--whitegrey) h(-1) s(-11%) l(-6%));
 
     /* Global, high-level UI colors */
     --main-bg-color: rgb(255, 255, 255);
     --main-color-area-divider: var(--whitegrey-d1);
-    --main-color-content-greybg: color-mod(var(--whitegrey-l2) l(-1%));
+    --main-color-content-greybg: #f5f6f6;
 
     --list-color-divider: var(--whitegrey-d1);
-    
+
     /* Special colours */
     --transparent:transparent;
     --errorbg-lightred: rgba(240, 82, 48, 0.05);
-    
+
     /* Global layout values */
     --main-layout-content-sidepadding: 48px;
     --main-layout-content-maxwidth: 1320px;
     --main-layout-area-padding: 32px;
     --main-layout-vpanel-height: 96px;
     --main-layout-section-vpadding: 3vw;
-    
+
     /* Style values */
-    --border-radius: 4px;
+    --border-radius: 3px;
     --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Droid Sans", "Helvetica Neue", sans-serif;
     --font-family-mono: Consolas, "Liberation Mono", Menlo, Courier, monospace;
 
@@ -155,9 +161,20 @@
     --shadow-2: 0 0 1px rgba(0,0,0,.05), 0 5px 18px rgba(0,0,0,.08);
     --shadow-3: 0 0 1px rgba(0,0,0,.05), 0 8px 28px rgba(0,0,0,.12);
 
+    --box-shadow-m:
+        0 0 7px rgba(0, 0, 0, 0.08),
+        0 2.1px 2.2px -5px rgba(0, 0, 0, 0.011),
+        0 5.1px 5.3px -5px rgba(0, 0, 0, 0.016),
+        0 9.5px 10px -5px rgba(0, 0, 0, 0.02),
+        0 17px 17.9px -5px rgba(0, 0, 0, 0.024),
+        0 31.8px 33.4px -5px rgba(0, 0, 0, 0.029),
+        0 76px 80px -5px rgba(0, 0, 0, 0.04)
+    ;
+
     /* Inputs */
     --input-bg-color: var(--white);
-    --input-border: color-mod(var(--lightgrey) l(-5%) s(-10%)) 1px solid;
+    --input-border-color: var(--whitegrey-d2);
+    --input-border: var(--input-border-color) 1px solid;
 }
 
 /* Colour classes
@@ -278,7 +295,7 @@ body {
 }
 
 ::selection {
-    background: color-mod(var(--blue) lightness(+20%));
+    background: color-mod(var(--whitegrey-d1));
 }
 
 
@@ -337,6 +354,23 @@ h6 {
     font-size: 1.5rem;
 }
 
+.gh-heading-xs {
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: .2px;
+    margin: 0;
+    padding: 0;
+    color: var(--black);
+}
+
+.gh-data-summary {
+    font-size: 3.9rem;
+    line-height: 4rem;
+    font-weight: 600;
+    color: var(--black);
+}
+
 p,
 ul,
 ol,
@@ -368,7 +402,7 @@ mark {
 }
 
 a {
-    color: var(--blue);
+    color: var(--green-d1);
     text-decoration: none;
     transition: background 0.3s, color 0.3s;
 }
@@ -689,4 +723,16 @@ img {
 .liquid-container.show-overflow.liquid-animating,
 .liquid-container.show-overflow.liquid-animating .liquid-child {
     overflow: hidden;
+}
+
+.site-frame {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    transform: translate3d(0, 0, 0);
 }

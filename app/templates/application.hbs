@@ -10,6 +10,11 @@
 
         <main class="gh-main {{this.ui.mainClass}}" role="main">
             {{outlet}}
+
+            {{#if this.showBilling}}
+                <GhBillingModal @billingWindowOpen={{this.billing.billingWindowOpen}} />
+            {{/if}}
+
         </main>
 
         <GhNotifications />
@@ -29,8 +34,15 @@
         />
     {{/if}}
 
-    {{#if this.showBilling}}
-        <GhBillingModal />
+    {{#if this.settings.accentColor}}
+        <style>
+            .koenig-editor__editor a:not([class]) {
+                color: {{this.adjustedAccentColor}};
+            }
+            .koenig-editor__editor blockquote {
+                border-left: 0.25rem solid {{this.adjustedAccentColor}};
+            }
+        </style>
     {{/if}}
 </GhApp>
 

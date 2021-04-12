@@ -5,18 +5,21 @@ import {inject as service} from '@ember/service';
 export default Controller.extend({
 
     settings: service(),
+    session: service(),
+
+    queryParams: ['showPortalSettings', 'showBrandingModal'],
 
     showPortalSettings: false,
     showBrandingModal: false,
     showLeaveSettingsModal: false,
 
     tagName: '',
-    
+
     actions: {
         openStripeSettings() {
             this.set('membersStripeOpen', true);
         },
-        
+
         closePortalSettings() {
             const changedAttributes = this.settings.changedAttributes();
             if (changedAttributes && Object.keys(changedAttributes).length > 0) {

@@ -6,7 +6,7 @@ export default Service.extend({
     config: service(),
     ghostPaths: service(),
 
-    billingRouteRoot: '#/billing',
+    billingRouteRoot: '#/pro',
     billingWindowOpen: false,
     subscription: null,
     previousRoute: null,
@@ -14,7 +14,7 @@ export default Service.extend({
     init() {
         this._super(...arguments);
 
-        if (this.config.get('billingUrl')) {
+        if (this.config.get('hostSettings.billing.url')) {
             window.addEventListener('message', (event) => {
                 if (event && event.data && event.data.route) {
                     this.handleRouteChangeInIframe(event.data.route);
@@ -38,7 +38,7 @@ export default Service.extend({
     },
 
     getIframeURL() {
-        let url = this.config.get('billingUrl');
+        let url = this.config.get('hostSettings.billing.url');
 
         if (window.location.hash && window.location.hash.includes(this.get('billingRouteRoot'))) {
             let destinationRoute = window.location.hash.replace(this.get('billingRouteRoot'), '');
@@ -53,7 +53,7 @@ export default Service.extend({
 
     // Controls billing window modal visibility and sync of the URL visible in browser
     // and the URL opened on the iframe. It is responsible to non user triggered iframe opening,
-    // for example: by entering "/billing" route in the URL or using history navigation (back and forward)
+    // for example: by entering "/pro" route in the URL or using history navigation (back and forward)
     setBillingWindowOpen(value) {
         let billingIframe = this.getBillingIframe();
 
@@ -73,9 +73,9 @@ export default Service.extend({
 
         // Ensures correct "getIframeURL" calculation when syncing iframe location
         // in setBillingWindowOpen
-        window.location.hash = childRoute || '/billing';
+        window.location.hash = childRoute || '/pro';
 
-        this.router.transitionTo(childRoute || '/billing');
+        this.router.transitionTo(childRoute || '/pro');
     },
 
     closeBillingWindow() {

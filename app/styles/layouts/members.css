@@ -16,6 +16,9 @@
 
 .gh-member-detail-avatar {
     box-shadow: none;
+    width: 80px;
+    height: 80px;
+    min-width: 80px;
 }
 
 .gh-member-avatar-label {
@@ -53,6 +56,12 @@
     table-layout: fixed;
 }
 
+@media (max-width: 1100px) {
+    .members-list {
+        border-bottom: none    
+    }
+}
+
 .members-list .gh-list-row.header {
     z-index: 1;
 }
@@ -61,6 +70,7 @@
     position: sticky;
     top: 84px;
     z-index: 1;
+    background: var(--white);
 }
 
 .members-list-header-overlay {
@@ -93,7 +103,8 @@
     min-width: 220px;
     padding-left: 32px;
     border: none;
-    background: color-mod(var(--whitegrey) l(+1%));
+    background: var(--white);
+    border: var(--input-border);
 }
 
 .members-header.grey .view-actions .gh-btn,
@@ -103,6 +114,7 @@
 
 .members-header .view-actions input.gh-members-list-searchfield:focus {
     background: var(--white);
+    border-color: var(--green);
 }
 
 .members-header .view-actions .gh-input-search-icon {
@@ -118,8 +130,8 @@
 }
 
 .gh-members-list-searchfield.active {
-    border-color: #3eb0ef;
-    box-shadow: inset 0 0 0 1px #3eb0ef;
+    border-color: var(--green) !important;
+    box-shadow: inset 0 0 0 1px var(--green);
 }
 
 .gh-members-list-checkbox {
@@ -132,7 +144,7 @@ p.gh-members-list-email {
 
 .gh-members-list-open-rate,
 .gh-members-list-geolocation {
-    width: 120px;
+    width: 150px;
 }
 
 .gh-members-list-subscribed-at {
@@ -172,14 +184,6 @@ p.gh-members-list-email {
     margin-right: 32px;
 }
 
-.gh-members-chart-box {
-    flex: 1 1 auto;
-    min-width: 0;
-    min-height: 0;
-    border: 1px solid var(--list-color-divider);
-    border-left: none;
-}
-
 .gh-members-chart-header {
     display: flex;
     align-items: center;
@@ -202,12 +206,6 @@ p.gh-members-list-email {
 
 .gh-members-chart-dropdown {
     margin-left: -103px;
-}
-
-.gh-members-chart-container {
-    height: 186px;
-    margin: 0 0 0 -16px;
-    padding: 4px 20px 11px 0;
 }
 
 .gh-members-chart-xlabels {
@@ -239,20 +237,8 @@ p.gh-members-list-email {
 }
 
 .gh-members-chart-summary-heading {
-    font-size: 1.1rem;
-    text-transform: uppercase;
-    font-weight: 500;
-    letter-spacing: 0.2px;
     margin: 0;
     padding: 0;
-    color: var(--black);
-}
-
-.gh-members-chart-summary-data {
-    font-size: 3.9rem;
-    color: var(--black);
-    line-height: 4.0rem;
-    font-weight: 600;
 }
 
 .gh-members-chart.black {
@@ -284,7 +270,7 @@ p.gh-members-list-email {
 
 .gh-members-chart-box.black .gh-members-chart-summary-heading {
     color: var(--lightgrey);
-}    
+}
 
 .gh-members-chart-box.black .gh-members-chart-header {
     border-color: var(--darkgrey);
@@ -313,28 +299,27 @@ p.gh-members-list-email {
     margin-top: var(--main-layout-section-vpadding);
 }
 
+.gh-members-list-subscribed-moment::first-letter {
+    text-transform: uppercase;
+}
+
+@media  (min-width: 1200px) and (max-width: 1370px) {
+    .members-header .view-actions input.gh-members-list-searchfield {
+        max-width: 130px;
+        min-width: unset;
+    }
+}
+
 @media (max-width: 1100px) {
     .gh-members-chart-summary-data {
         font-size: 2.8rem;
         line-height: 2.8rem;
-    }
-
-    .gh-members-chart-container {
-        height: 166px;
     }
 }
 
 @media (max-width: 1000px) {
     .members-list .gh-list-header, .gh-list-hidecell-m {
         display: table-cell;
-    }
-
-    .gh-members-chart-wrapper {
-        flex-direction: column;
-    }
-
-    .gh-members-chart-box {
-        margin: 0 0 24px;
     }
 }
 
@@ -364,7 +349,7 @@ p.gh-members-list-email {
         display: flex;
         position: relative;
         flex-wrap: wrap;
-        border-bottom: 1px solid var(--lightgrey);
+        border-bottom: 1px solid var(--list-color-divider);
         margin: 0;
     }
 
@@ -398,6 +383,23 @@ p.gh-members-list-email {
         font-size: 1.2rem;
     }
 
+    .gh-members-list-subscribed-at div {
+        display: inline;
+        margin-right: 1px;
+    }
+
+    .gh-members-list-subscribed-moment::first-letter {
+        text-transform: none;
+    }
+
+    .gh-members-list-subscribed-moment::before {
+        content: "(";
+    }
+
+    .gh-members-list-subscribed-moment::after {
+        content: ")";
+    }
+
     .gh-members-list-chevron {
         display: block;
         position: absolute;
@@ -423,7 +425,7 @@ p.gh-members-list-email {
         display: inline-block;
         width: auto;
         margin-top: -16px;
-        padding: 0 0 0 64px;
+        padding: 0 0 0 49px;
     }
 
     .gh-members-list-open-rate-noname {
@@ -457,7 +459,7 @@ p.gh-members-list-email {
     .gh-members-list-subscribed-moment {
         display: none;
     }
-    
+
     .gh-members-list-chevron {
         display: none;
     }
@@ -469,6 +471,10 @@ p.gh-members-list-email {
         min-height: 120px;
     }
 
+    .gh-canvas-header.break.tablet .gh-canvas-header-content {
+        height: 160px;
+    }
+
     .members-header .gh-canvas-title {
         position: absolute;
         top: 29px;
@@ -476,7 +482,7 @@ p.gh-members-list-email {
     }
 
     .members-header .view-actions {
-        margin-top: 62px;
+        margin-top: 30px;
         width: 100%;
     }
 
@@ -497,11 +503,35 @@ label[for="member-description"] + p {
     margin: 0 0 4px;
 }
 
+.gh-member-detail-overview {
+    padding: 32px 0 0;
+}
+
+.gh-member-detail-overview h3 {
+    font-size: 1.7rem;
+    font-weight: 600;
+    padding: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.gh-member-detail-overview p {
+    margin: 0;
+    padding: 0;
+    font-size: 1.3rem;
+    color: var(--midgrey);
+}
+
+.gh-member-detail-overview a,
+.gh-member-detail-overview a:hover {
+    color: var(--black);
+}
+
 textarea.gh-member-details-textarea {
     max-width: 100%;
     min-width: auto;
     min-height: 50px;
-    height: 154px;
+    height: 85px;
 }
 
 .gh-member-info-icon {
@@ -518,8 +548,9 @@ textarea.gh-member-details-textarea {
 .gh-member-header-stripeinfo {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     min-height: 24px;
+    margin-top: -8px;
 }
 
 .gh-member-stripe-info {
@@ -528,15 +559,6 @@ textarea.gh-member-details-textarea {
 
 .gh-member-stripe-info:last-of-type {
     border-bottom: none;
-}
-
-.gh-member-btn-stripe-toggle {
-    box-shadow: 0 2px 5px -3px rgba(0,0,0,.12), 0 0 1px rgba(0, 0, 0, .13);    
-}
-
-.gh-member-btn-stripe-toggle:hover {
-    box-shadow: 0 3px 5px -3px rgba(0,0,0,.13), 0 0 1px rgba(0, 0, 0, .13);
-
 }
 
 .gh-member-stripe-table {
@@ -565,6 +587,7 @@ textarea.gh-member-details-textarea {
     color: var(--midgrey-d1);
     white-space: nowrap;
     padding: 5px 12px 5px 0;
+    width: 170px;
 }
 
 .gh-member-stripe-data {
@@ -598,6 +621,8 @@ textarea.gh-member-details-textarea {
 .gh-members-subscribed-checkbox,
 .gh-members-comped-checkbox {
     max-width: 100%;
+    margin-top: 24px;
+    margin-bottom: 0;
 }
 
 .gh-new-member-avatar {
@@ -606,11 +631,11 @@ textarea.gh-member-details-textarea {
 
 .gh-member-cancels-on-label {
     display: inline-block;
-    background: var(--lightgrey-d1);
+    background: color-mod(var(--pink) a(10%));
     border-radius: 4px;
     padding: 0px 5px;
     margin: -2px 0 -2px -5px;
-    color: var(--darkgrey);
+    color: var(--pink);
     font-size: 1.3rem;
     font-weight: 400;
 }
@@ -619,12 +644,6 @@ textarea.gh-member-details-textarea {
     display: inline-block;
     text-transform: capitalize;
     margin-right: 6px;
-}
-
-.gh-member-btn-cancelsub span,
-.gh-member-btn-contsub span {
-    height: 25px;
-    line-height: 25px;
 }
 
 .gh-member-btn-contsub {
@@ -644,16 +663,9 @@ textarea.gh-member-details-textarea {
     color: color-mod(var(--blue) l(-7%) saturation(-10%));
 }
 
-.gh-member-details,
-.gh-member-feed {
-    float: left;
-    width: 69%;
-}
-
 .gh-member-internal-info,
 .gh-member-stripe {
     float: right;
-    width: 29%;
 }
 
 @media (max-width: 1160px) {
@@ -670,16 +682,16 @@ textarea.gh-member-details-textarea {
     .gh-member-details {
         order: 1;
     }
-    
+
     .gh-member-feed {
         order: 4;
     }
-    
+
     .gh-member-internal-info {
         order: 2;
         margin-top: 3.2rem;
     }
-    
+
     .gh-member-stripe {
         order: 3;
     }
@@ -715,13 +727,13 @@ textarea.gh-member-details-textarea {
     background: var(--red);
 }
 
-.gh-member-feed-row {
-    display: flex;
-    padding: 0 2rem;
+.gh-member-feed {
+    margin: -12px 0;
 }
 
-.gh-member-feed-row:hover {
-    background: var(--whitegrey-l2);
+.gh-member-feed-row {
+    display: flex;
+    padding: 0;
 }
 
 .gh-member-feed-activity {
@@ -740,10 +752,11 @@ textarea.gh-member-details-textarea {
     vertical-align: middle;
     color: var(--darkgrey);
     text-align: left;
+    font-weight: 500;
 }
 
 .gh-member-feed-title:hover {
-    color: var(--blue-d2);
+    color: var(--black);
 }
 
 .gh-member-feed-date {
@@ -753,6 +766,10 @@ textarea.gh-member-details-textarea {
     font-size: 1.3rem;
     text-align: right;
     white-space: nowrap;
+}
+
+.gh-member-feed-row:hover .gh-member-feed-date {
+    color: var(--darkgrey);
 }
 
 .gh-member-btn-expandfeed span {
@@ -898,7 +915,7 @@ p.gh-members-import-errorcontext {
         /* Shadow covers */
         linear-gradient(var(--white) 30%, rgba(255,255,255,0)),
         linear-gradient(rgba(255,255,255,0), var(--white) 70%) 0 100%,
-        
+
         /* Shadows */
         /* radial-gradient(farthest-side at 50% 0, rgba(0,0,0,.12), rgba(0,0,0,0)) -64px 0,
         radial-gradient(farthest-side at 50% 100%, rgba(0,0,0,.12), rgba(0,0,0,0)) -64px 100%; */
@@ -907,7 +924,7 @@ p.gh-members-import-errorcontext {
 	background-repeat: no-repeat;
 	background-color: var(--white);
 	background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
-	
+
 	/* Opera doesn't support this in the shorthand */
     background-attachment: local, local, scroll, scroll;
     margin-top: 4px;
@@ -1138,7 +1155,7 @@ p.gh-members-import-errordetail:first-of-type {
 }
 
 .gh-member-import-icon-confetti {
-    color: var(--purple);
+    color: var(--pink);
     margin-left: 12px;
 }
 
@@ -1168,13 +1185,13 @@ p.gh-members-import-errordetail:first-of-type {
 
 .gh-email-design-typography .gh-radio-content {
     border: 1px solid var(--whitegrey);
-    border-radius: 4px;
+    border-radius: 3px;
     margin: 0 -32px 0 0;
 }
 
 .gh-email-design-typography .active .gh-radio-content {
     border: 1px solid transparent;
-    box-shadow: 0px 0px 0px 2px var(--blue);
+    box-shadow: 0px 0px 0px 2px var(--green);
 }
 
 .gh-email-design-typography .gh-radio-button {
@@ -1229,13 +1246,17 @@ p.gh-members-import-errordetail:first-of-type {
 }
 
 .gh-members-emailsettings-footer-input p {
+    height: 108px;
+    overflow-y: scroll;
+}
+
+.gh-members-emailsettings-footer-input p {
     color: var(--darkgrey);
     font-size: 1.4rem !important;
     line-height: 1.5em !important;
 }
 
 .gh-members-emailsettings-footer {
-    border-top: 1px solid var(--whitegrey);
     padding-top: 20px;
     margin-bottom: 4px;
 }
@@ -1281,10 +1302,13 @@ p.gh-members-import-errordetail:first-of-type {
 
 .gh-members-emailpreview-container {
     background: #fff;
-    border-radius: 12px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
     padding: 0;
     margin: 32px auto;
-    box-shadow: 
+    box-shadow:
         0 0 0 1px rgba(0,0,0,0.02),
         0 2.8px 2.2px rgba(0, 0, 0, 0.02),
         0 6.7px 5.3px rgba(0, 0, 0, 0.028),
@@ -1313,10 +1337,10 @@ p.gh-members-import-errordetail:first-of-type {
     margin: 0;
     height: 78px;
     padding: 0 24px;
-    border-bottom: 1px solid var(--lightgrey-d1);
+    border-bottom: 1px solid var(--whitegrey);
     background: var(--white);
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
 }
 
 .gh-members-emailpreview-faux p {

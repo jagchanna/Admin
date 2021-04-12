@@ -1,6 +1,7 @@
 import ModalComponent from 'ghost-admin/components/modal-base';
 import RSVP from 'rsvp';
 import ValidationEngine from 'ghost-admin/mixins/validation-engine';
+import {action} from '@ember/object';
 import {A as emberA} from '@ember/array';
 import {inject as service} from '@ember/service';
 import {task} from 'ember-concurrency';
@@ -8,25 +9,16 @@ import {task} from 'ember-concurrency';
 const {Promise} = RSVP;
 
 export default ModalComponent.extend(ValidationEngine, {
+    router: service(),
     notifications: service(),
     store: service(),
+    limit: service(),
 
     classNames: 'modal-content invite-new-user',
 
     role: null,
-    roles: null,
-    authorRole: null,
 
     validationType: 'inviteUser',
-
-    init() {
-        this._super(...arguments);
-    },
-
-    didInsertElement() {
-        this._super(...arguments);
-        this.fetchRoles.perform();
-    },
 
     willDestroyElement() {
         this._super(...arguments);
@@ -37,15 +29,15 @@ export default ModalComponent.extend(ValidationEngine, {
     },
 
     actions: {
-        setRole(role) {
-            this.set('role', role);
-            this.errors.remove('role');
-        },
-
         confirm() {
             this.sendInvitation.perform();
         }
     },
+
+    setRole: action(function (role) {
+        this.set('role', role);
+        this.errors.remove('role');
+    }),
 
     validate() {
         let email = this.email;
@@ -82,18 +74,6 @@ export default ModalComponent.extend(ValidationEngine, {
         }));
     },
 
-    fetchRoles: task(function * () {
-        let roles = yield this.store.query('role', {permissions: 'assign'});
-        let authorRole = roles.findBy('name', 'Author');
-
-        this.set('roles', roles);
-        this.set('authorRole', authorRole);
-
-        if (!this.role) {
-            this.set('role', authorRole);
-        }
-    }),
-
     sendInvitation: task(function* () {
         let email = this.email;
         let role = this.role;
@@ -127,5 +107,11 @@ export default ModalComponent.extend(ValidationEngine, {
                 this.send('closeModal');
             }
         }
-    }).drop()
+    }).drop(),
+
+    transitionToBilling: task(function () {
+        this.router.transitionTo('pro');
+
+        this.send('closeModal');
+    })
 });

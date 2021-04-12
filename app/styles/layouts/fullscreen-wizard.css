@@ -7,7 +7,7 @@
     z-index: 1000;
     height: 100vh;
     background: var(--white);
-    overflow: auto;
+    overflow: hidden;
 }
 
 .gh-launch-wizard-step-indicator {
@@ -16,6 +16,28 @@
     font-weight: 500;
     letter-spacing: 0.1px;
     text-transform: uppercase;
+}
+
+.gh-launch-wizard-content {
+    display: flex;
+    background: var(--white);
+    border-top: 1px solid var(--whitegrey);
+}
+
+.gh-launch-wizard-content-left {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 25%;
+    min-width: 348px;
+    max-width: 400px;
+    margin: 40px 48px 0;
+}
+
+.gh-launch-wizard-content-right {
+    position: relative;
+    flex-grow: 1;
+    flex-basis: 100%;
+    margin: 40px 48px 56px 0;
 }
 
 .gh-launch-wizard-preview {
@@ -34,8 +56,6 @@
     display: flex;
     flex-direction: column;
     height: calc(100vh - 136px);
-    min-width: 320px;
-    margin: 40px 48px 0 0;
 }
 
 .gh-launch-wizard-settings-container .gh-setting-action-largeimg-delete,
@@ -69,13 +89,9 @@
 /* Connect Stripe settings */
 .gh-launch-wizard-stripe-info {
     width: 100%;
-    padding: 12px;
-    border: 1px solid var(--whitegrey);
-    border-radius: 4px;
-    box-shadow: 
-        0 0 1px rgba(0,0,0,.12),
-        0 1px 6px rgba(0,0,0,.03),
-        0 6px 10px -8px rgba(0,0,0,.1);
+    padding: 24px 16px;
+    background: var(--whitegrey-l1);
+    border-radius: 2px;
 }
 
 .gh-launch-wizard-stripe-connect-token {
@@ -85,4 +101,8 @@
     font-size: 1.3rem;
     resize: none;
     background: var(--whitegrey-l2);
+}
+
+.gh-setting-desc.skip-step {
+    margin: 12px 0;
 }

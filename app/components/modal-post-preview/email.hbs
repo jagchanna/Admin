@@ -1,5 +1,5 @@
-<div class="modal-body modal-preview-email-content gh-pe-desktop-container h-auto overflow-auto">
-    <div class="gh-pe-emailclient-mockup">
+<div class="gh-post-preview-email-container">
+    <div class="gh-post-preview-email-mockup">
         <div class="gh-pe-emailclient-sender">
             <p>
                 <span class="strong">{{this.config.blogTitle}}</span> &lt;{{this.settings.membersFromAddress}}&gt;
@@ -10,17 +10,19 @@
     </div>
 </div>
 <div class="gh-post-preview-email-footer">
-    <span class="mr3 flex-grow-1 nowrap fw6 f8 darkgrey">Send a preview newsletter</span>
-    <div class="mr3 truncate midlightgrey">
+    <span class="mr3 nowrap fw6 f8 darkgrey">Send a test newsletter</span>
+
+    <div class="gh-post-preview-email-input {{if this.sendPreviewEmailError "error"}}" {{did-insert this.initPreviewEmailAddress}}>
         <Input
             @value={{this.previewEmailAddress}}
-            class="gh-input"
+            class="gh-input gh-post-preview-email-input"
             placeholder="you@yoursite.com"
+            aria-invalid={{if this.sendPreviewEmailError "true"}}
+            aria-describedby={{if this.sendPreviewEmailError "sendError"}}
             {{on-key "Enter" (perform this.sendPreviewEmailTask)}}
         />
-
         {{#if this.sendPreviewEmailError}}
-            <div class="error"><p class="response">{{this.sendPreviewEmailError}}</p></div>
+            <div class="error fixed nowrap f8 lh-heading"><span class="response" id="sendError">{{this.sendPreviewEmailError}}</span></div>
         {{/if}}
     </div>
     <GhTaskButton
@@ -28,6 +30,6 @@
         @buttonText="Send"
         @successText="Sent"
         @runningText="Sending..."
-        @class="gh-btn gh-btn-green gh-btn-icon"
+        @class="gh-btn gh-btn-green gh-btn-icon gh-post-preview-email-trigger"
     />
 </div>
